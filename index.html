@@ -1,1 +1,35 @@
-home page
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="test-chart.js"></script>
+    <script src="test-component.js"></script>
+</head>
+<body>
+
+<!-- set up the scene -->
+<a-scene >
+<!-- <a-scene> -->
+    <!-- <a-light type='ambient' color='white' intensity='0.5'></a-light> -->
+    <!-- <a-light type='directional' color='white' intensity='1.0' position='1 1 1'></a-light> -->
+    <a-entity>
+        <a-entity test-chart='count: 100'></a-entity>
+        <a-text value="Drew Logsdon's\n Resume!" scale='1.5 1.5 1.5' color="black" position='-1 1.5 -1.5'></a-text>
+    </a-entity>
+
+    <!-- add a view camera (2d only) -->
+    <a-entity position='0 0 0'>
+        <a-camera mouse-cursor></a-camera>
+    </a-entity>
+</a-scene>
+
+<script type='text/javascript'>
+(function() {
+    // window.setTimeout(function() {
+    //     document.querySelector('a-scene').components.inspector.injectInspector()
+    // },1000)
+})()
+</script>
+
+</body></html>
