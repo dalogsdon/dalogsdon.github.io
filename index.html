@@ -13,10 +13,19 @@
 <!-- <a-scene> -->
     <!-- <a-light type='ambient' color='white' intensity='0.5'></a-light> -->
     <!-- <a-light type='directional' color='white' intensity='1.0' position='1 1 1'></a-light> -->
-    <a-entity>
-        <a-entity test-chart='count: 100'></a-entity>
-        <a-text value="Drew Logsdon's\n Resume!" scale='1.5 1.5 1.5' color="black" position='-1 1.5 -1.5'></a-text>
+
+    <a-plane color="#61362D" height="10" width="10" rotation="-90 0 0"></a-plane>
+
+    <a-entity position="0 1.5 -1.5">
+        <a-box color="gray" depth="1" height="1" width="1" position="0 0 0"></a-box>
+        <a-text value="Drew Logsdon" scale='0.5 0.5 0.5' color="black" position='-0.34 0.04 0.5'></a-text>
+        <a-text value="Innovator\nlearner\nleader" scale='0.5 0.5 0.5' color="black" position='-0.5 0.04 0' rotation="0 -90 0" align="center"></a-text>
+        <a-text value="5+ years experience as a\nWeb UI Developer\nwith full-stack skills." scale='0.35 0.35 0.35' color="black" position='0.43 0.02 -0.5' rotation="0 180 0"></a-text>
+        <a-text value="Dabbler in Virtual\nand Augmented Reality." scale='0.4 0.4 0.4' color="black" position='0.5 0.03 0.01' rotation="0 90 0" align="center"></a-text>
+        <a-animation attribute="rotation" repeat="indefinite" to="0 360 0" easing="linear" dur="10000"></a-animation>
     </a-entity>
+
+    <a-sky color="#ECECEC"></a-sky>
 
     <!-- add a view camera (2d only) -->
     <a-entity position='0 0 0'>
