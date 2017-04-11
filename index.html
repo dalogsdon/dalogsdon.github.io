@@ -3,29 +3,30 @@
 <head>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
-    <script src="test-chart.js"></script>
-    <script src="test-component.js"></script>
 </head>
 <body>
 
 <!-- set up the scene -->
 <a-scene >
-<!-- <a-scene> -->
-    <!-- <a-light type='ambient' color='white' intensity='0.5'></a-light> -->
-    <!-- <a-light type='directional' color='white' intensity='1.0' position='1 1 1'></a-light> -->
+    <a-light type='ambient' color='white' intensity='0.3'></a-light>
+    <a-light type='point' color='white' intensity='0.4' position='0 2.71 0'></a-light>
 
-    <a-plane color="#61362D" height="10" width="10" rotation="-90 0 0"></a-plane>
+    <a-assets>
+        <a-asset-item id="house-obj" src="resume-house.obj"></a-asset-item>
+        <a-asset-item id="house-mtl" src="resume-house.mtl"></a-asset-item>
+        <a-asset-item id="drew-img" src="drew-small.jpg"></a-asset-item>
+    </a-assets>
 
-    <a-entity position="0 1.5 -1.5">
-        <a-box color="gray" depth="1" height="1" width="1" position="0 0 0"></a-box>
-        <a-text value="Drew Logsdon" scale='0.5 0.5 0.5' color="black" position='-0.34 0.04 0.5'></a-text>
-        <a-text value="Innovator\nlearner\nleader" scale='0.5 0.5 0.5' color="black" position='-0.5 0.04 0' rotation="0 -90 0" align="center"></a-text>
-        <a-text value="5+ years experience as a\nWeb UI Developer\nwith full-stack skills." scale='0.35 0.35 0.35' color="black" position='0.43 0.02 -0.5' rotation="0 180 0"></a-text>
-        <a-text value="Dabbler in Virtual\nand Augmented Reality." scale='0.4 0.4 0.4' color="black" position='0.5 0.03 0.01' rotation="0 90 0" align="center"></a-text>
-        <a-animation attribute="rotation" repeat="indefinite" to="0 360 0" easing="linear" dur="10000"></a-animation>
+    <!-- <a-plane color="#61362D" height="10" width="10" rotation="-90 0 0"></a-plane> -->
+    <a-entity obj-model="obj: #house-obj; mtl: #house-mtl" position="-1.5 0 1.5">
+        <a-plane material="src: #drew-img" position="3.657 1.45 -1.825" rotation="0 -90 0" height="1.2319" width="1.2319"></a-plane>
     </a-entity>
 
-    <a-sky color="#ECECEC"></a-sky>
+    <a-text value="Drew Logsdon" scale='1 1 1' color="black" position='-0.51 2.12 -2.15'></a-text>
+    <a-text value="Innovator, Learner,Leader\n\n5+ years experience\nas a Web UI Developer with full-stack skills\n\nDabbler in Virtual\nand Augmented Reality"
+        scale='0.5 0.5 0.5' color="black" position='0.22 1.4 -2.15' align="center"></a-text>
+
+    <a-sky color="#c1e0ec"></a-sky>
 
     <!-- add a view camera (2d only) -->
     <a-entity position='0 0 0'>
