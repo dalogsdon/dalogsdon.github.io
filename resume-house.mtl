@@ -2,26 +2,14 @@
 ## Alias OBJ Material File
 # Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
 
-newmtl FrontColor
-Ka 0.000000 0.000000 0.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.330000 0.330000 0.330000
-
-newmtl Wood_Veneer_01
-Ka 0.000000 0.000000 0.000000
-Kd 0.466667 0.274510 0.137255
-Ks 0.330000 0.330000 0.330000
-map_Kd resume-house/Wood_Veneer_01.jpg
-
-newmtl Formica_Beige
-Ka 0.000000 0.000000 0.000000
-Kd 0.823529 0.737255 0.576471
-Ks 0.330000 0.330000 0.330000
-map_Kd resume-house/Formica_Beige.jpg
-
 newmtl _5
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 0.980392 0.941176
+Ks 0.330000 0.330000 0.330000
+
+newmtl FrontColor
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
 Ks 0.330000 0.330000 0.330000
 
 newmtl Wood_Floor_Parquet
@@ -29,6 +17,12 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.560784 0.349020 0.145098
 Ks 0.330000 0.330000 0.330000
 map_Kd resume-house/Wood_Floor_Parquet.jpg
+
+newmtl Formica_Beige
+Ka 0.000000 0.000000 0.000000
+Kd 0.823529 0.737255 0.576471
+Ks 0.330000 0.330000 0.330000
+map_Kd resume-house/Formica_Beige.jpg
 
 newmtl Wallpaper_Stripe
 Ka 0.000000 0.000000 0.000000
