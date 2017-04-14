@@ -1,7 +1,7 @@
 (function() {
-    var CHART_SIZE = 3;
+    var CHART_SIZE = 1;
     var CHART_SIZE_HALF = CHART_SIZE/2;
-    var sphereRadius = 0.05;
+    var sphereRadius = 0.03;
 
     function clamp(number, min, max) {
         return Math.max(Math.min(number, max), min);
@@ -22,7 +22,8 @@
         schema: {
             count: { type: 'int', default: 20 },
             groundColor: { type: 'color', default: 'lightgray' },
-            pointColor: { type: 'color', default: '#9999ff' }
+            pointColor: { type: 'color', default: '#9999ff' },
+            size: { type: 'number', default: 1 }
         },
 
         init: function() {
