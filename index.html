@@ -2,12 +2,12 @@
 <html>
 <head>
     <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.7.0/dist/aframe-extras.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.8.3/dist/aframe-extras.min.js"></script>
 </head>
 <body>
 
 <!-- set up the scene -->
-<a-scene antialias="true" physics>
+<a-scene antialias="true" physics="debug: true">
     <a-light type="ambient" color="white" intensity="0.3"></a-light>
 
     <a-assets>
@@ -24,9 +24,6 @@
     <a-entity vive-controls="hand: left"></a-entity>
     <a-entity vive-controls="hand: right"></a-entity>
 
-    <!-- ground plane so you don't fall through the world -->
-    <a-grid static-body material="visible: false;"></a-grid>
-
     <!-- room -->
     <a-entity obj-model="obj: #house-obj; mtl: #house-mtl" position="-1.828 0 1.828">
         <!-- room bounds -->
@@ -37,12 +34,17 @@
         <a-plane static-body material="visible: false" height="2.7432" width="0.43" position="3.5052 1.3716 -3.5052" rotation="0 -45 0"></a-plane>
         <a-plane static-body material="visible: false" height="2.7432" width="0.43" position="3.5052 1.3716 -0.1524" rotation="0 -135 0"></a-plane>
 
+        <!-- floor -->
+        <a-plane static-body material="visible: false" height="3.6576" width="3.6576" position="1.8288 0 -1.8288" rotation="90 0 0"></a-plane>
+
         <!-- lamp -->
         <a-light type="point" color="white" intensity="0.4" position="1.828 2.47 -1.828"></a-light>
 
         <!-- table -->
-        <a-entity obj-model="obj: #table-obj; mtl: #table-mtl" position="3.39 0 -0.06" rotation="0 45 0">
-            <a-text value="table" color="#51291a" rotation="-90 180 0" position="0.25 0.84 -0.17" scale=".3 .3 .3"></a-text>
+        <!-- <a-entity dynamic-body position="3.39 1 -0.06" rotation="0 45 0"> -->
+        <a-entity dynamic-body="shape: box" position='1.8 1 -1.8' rotation="0 45 0"
+            obj-model="obj: #table-obj; mtl: #table-mtl">
+            <!-- <a-text value="table" color="#51291a" rotation="-90 180 0" position="0.25 0.84 -0.17" scale=".3 .3 .3"></a-text> -->
         </a-entity>
 
         <!-- picture frame -->
@@ -56,6 +58,11 @@
             <a-text value="Drew Logsdon" scale="1 1 1" color="black" align="center" baseline="top"></a-text>
             <a-text value="Innovator, Learner, Leader\n\n5+ years experience\nas a Web UI Developer with full-stack skills\n\nDabbler in Virtual\nand Augmented Reality"
                 scale="0.5 0.5 0.5" color="black" position="0 -0.5 0" align="center" baseline="top"></a-text>
+        </a-entity>
+
+        <a-entity id="ball" position='1.8 1.8 -1.8'>
+            <a-box dynamic-body height="0.3" width="0.3" depth="0.3"></a-box>
+            <a-sphere color='red' position='0.15 0 0.15' radius='0.01'></a-sphere>
         </a-entity>
 
     </a-entity>
@@ -85,9 +92,14 @@
 </a-scene>
 
 <script type="text/javascript">
-// (function() {
-//
-// })()
+function bounceBall(force=1) {
+    let scene = AFRAME.scenes[0];
+    let ball = scene.querySelector('#ball');
+    let position = ball.getAttribute('position');
+    position.x = position.x + 0.15;
+    position.z = position.z + 0.15;
+    ball.body.applyImpulse(new CANNON.Vec3(0,force,0), new CANNON.Vec3().copy(position));
+}
 </script>
 
 </body></html>
