@@ -1,93 +1,128 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
-    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.7.0/dist/aframe-extras.min.js"></script>
-</head>
-<body>
+    <head></head>
+    <body>
+        <div class="container">
+            <div class="name"></div>
+            <div class="word"></div>
+        </div>
+        <script type="text/javascript">
+        (function() {
+            const NAME = 'Drew Logsdon';
+            const NBSP = '\xa0';
 
-<!-- set up the scene -->
-<a-scene antialias="true" physics>
-    <a-light type="ambient" color="white" intensity="0.3"></a-light>
+            // random number from 0 to n-1
+            const rand = (n) => Math.floor(Math.random() * n);
 
-    <a-assets>
-        <a-asset-item id="house-obj" src="resume-house.obj"></a-asset-item>
-        <a-asset-item id="house-mtl" src="resume-house.mtl"></a-asset-item>
-        <a-asset-item id="frame-obj" src="picture-frame.obj"></a-asset-item>
-        <a-asset-item id="frame-mtl" src="picture-frame.mtl"></a-asset-item>
-        <a-asset-item id="table-obj" src="side-table.obj"></a-asset-item>
-        <a-asset-item id="table-mtl" src="side-table.mtl"></a-asset-item>
+            // creates an element with text content
+            const createTextElement = (type, text, ...className) => {
+                const elem = document.createElement(type);
+                elem.textContent = text;
+                className.forEach(c => elem.classList.add(c));
+                return elem;
+            }
 
-        <a-asset-item id="drew-img" src="drew-2048.jpg"></a-asset-item>
-    </a-assets>
+            // store letter elements for easy access
+            const letterElements = [];
 
-    <a-entity vive-controls="hand: left"></a-entity>
-    <a-entity vive-controls="hand: right"></a-entity>
+            // add individual letters
+            const body = document.querySelector('.name');
+            NAME.split('').forEach(letter => {
+                const h1 = createTextElement('h1', letter === ' ' ? NBSP : letter);
+                if (letter !== ' ') {
+                    letterElements.push(h1);
+                }
+                body.append(h1);
+            });
 
-    <!-- ground plane so you don't fall through the world -->
-    <a-grid static-body material="visible: false;"></a-grid>
+            const flipToWord = (word) => {
+                // create word and flip it
+                const wordIdx = Math.floor(NAME.length / 2) - Math.floor(word.length / 2);
+                const wordContainer = document.querySelector('.word');
+                wordContainer.innerHTML = '';
+                for (let i=0; i < wordIdx; i++) {
+                    wordContainer.append(createTextElement('h1', NBSP));
+                }
+                word.split('').forEach(l => wordContainer.append(createTextElement('h1', l, 'backface')));
+                window.setTimeout(() => wordContainer.classList.add('flip'), 0);
 
-    <!-- room -->
-    <a-entity obj-model="obj: #house-obj; mtl: #house-mtl" position="-1.828 0 1.828">
-        <!-- room bounds -->
-        <a-plane static-body material="visible: false" height="2.7432" width="3.6576" position="0 1.3716 -1.828" rotation="0 90 0"></a-plane>
-        <a-plane static-body material="visible: false" height="2.7432" width="3.3528" position="1.6764 1.3716 -3.6576" rotation="0 0 0"></a-plane>
-        <a-plane static-body material="visible: false" height="2.7432" width="3.3528" position="1.6764 1.3716 0" rotation="0 180 0"></a-plane>
-        <a-plane static-body material="visible: false" height="2.7432" width="3.048" position="3.6576 1.3716 -1.828" rotation="0 -90 0"></a-plane>
-        <a-plane static-body material="visible: false" height="2.7432" width="0.43" position="3.5052 1.3716 -3.5052" rotation="0 -45 0"></a-plane>
-        <a-plane static-body material="visible: false" height="2.7432" width="0.43" position="3.5052 1.3716 -0.1524" rotation="0 -135 0"></a-plane>
+                // flip name
+                document.querySelector('.name').classList.add('flip');
+            };
+            const flipBackToName = () => {
+                // reset word
+                const wordContainer = document.querySelector('.word');
+                // wordContainer.innerHTML = '';
+                wordContainer.classList.remove('flip');
 
-        <!-- lamp -->
-        <a-light type="point" color="white" intensity="0.4" position="1.828 2.47 -1.828"></a-light>
+                // reset name
+                document.querySelector('.name').classList.remove('flip');
+            };
+            const toggleWord = (word) => {
+                if (document.querySelector('.name').classList.contains('flip')) {
+                    flipBackToName();
+                } else {
+                    flipToWord(word);
+                }
+            };
 
-        <!-- table -->
-        <a-entity obj-model="obj: #table-obj; mtl: #table-mtl" position="3.39 0 -0.06" rotation="0 45 0">
-            <a-text value="table" color="#51291a" rotation="-90 180 0" position="0.25 0.84 -0.17" scale=".3 .3 .3"></a-text>
-        </a-entity>
+            // animate letters
+            window.addEventListener('keydown', e => {
+                switch(e.which) {
+                    case 37: toggleWord('howdy'); break;
+                    case 38: toggleWord('hello'); break;
+                    case 39: toggleWord('hola'); break;
+                    case 40: toggleWord('aloha'); break;
+                }
+            })
+        })()
+        </script>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+            html {
+                font-size: 16px;
+                height: 100%;
+            }
+            body {
+                /* layout */
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                height: 100%;
+                margin: 0;
 
-        <!-- picture frame -->
-        <a-entity id="drew-frame" class="clickable" obj-model="obj: #frame-obj; mtl: #frame-mtl" position="3.65 0.95 -2.53" rotation="0 -90 0">
-            <a-plane material="src: drew-2048.jpg" position="0.71755 0.71755 .001" height="1.2319" width="1.2319"></a-plane>
-            <a-animation attribute="rotation" begin="click" dur="1000" direction="alternate" to="0 -95 0"></a-animation>
-        </a-entity>
+                /* other */
+                background-color: #272c35;
+            }
+            h1 {
+                backface-visibility: hidden;
+                color: #707b88;
+                font-family: 'Share Tech Mono', monospace;
+                font-size: 3rem;
+                font-weight: normal;
+                transition: transform 1s ease;
+            }
 
-        <!-- wall text -->
-        <a-entity position="1.68 2.15 -3.65">
-            <a-text value="Drew Logsdon" scale="1 1 1" color="black" align="center" baseline="top"></a-text>
-            <a-text value="Innovator, Learner, Leader\n\n5+ years experience\nas a Web UI Developer with full-stack skills\n\nDabbler in Virtual\nand Augmented Reality"
-                scale="0.5 0.5 0.5" color="black" position="0 -0.5 0" align="center" baseline="top"></a-text>
-        </a-entity>
-
-    </a-entity>
-
-    <!-- TODO add a skybox picture -->
-    <a-sky color="#29424b"></a-sky>
-
-    <a-entity>
-        <a-entity camera="user-height: 1.6;" universal-controls="movementEasing: 15; movementAcceleration: 40;" kinematic-body="radius: 0.2;">
-            <a-entity cursor="fuse: false;" position="0 0 -1"
-                    raycaster="near: 0; far: 0.5; objects: .clickable;">
-
-                <!-- crosshair cursor -->
-                <a-entity geometry="primitive: box; height: .01; width: .001;"
-                    material="color: #434343; opacity: 1; shader: flat;"></a-entity>
-                <a-entity geometry="primitive: box; height: .001; width: .01;"
-                    material="color: #434343; opacity: 1; shader: flat;"></a-entity>
-
-                <!-- TODO: animate cursor color when hovering an object -->
-                <!-- <a-animation begin="click" easing="linear" attribute="material.color"
-                    fill="both" from="red" to="blue" dur="0"></a-animation>
-                <a-animation begin="mouseenter" end="mouseleave" easing="linear" attribute="material.color"
-                    fill="both" from="#434343" to="red" dur="0"></a-animation> -->
-            </a-entity>
-        </a-camera>
-    </a-entity>
-</a-scene>
-
-<script type="text/javascript">
-// (function() {
-//
-// })()
-</script>
-
-</body></html>
+            .container {
+                position: relative;
+            }
+            .name, .word {
+                display: flex;
+            }
+            .word {
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .backface {
+                transform: rotateY(-180deg);
+            }
+            .name.flip h1 {
+                transform: rotateY(180deg);
+            }
+            .word.flip .backface {
+                transform: rotateY(0deg);
+            }
+        </style>
+    </body>
+</html>
